@@ -4,16 +4,14 @@ require 'active_support/testing/time_helpers'
 
 describe Fetcher do
   include ActiveSupport::Testing::TimeHelpers
-  before do
-    @rates = File.open(File.join(Dir.pwd, '/spec/fixtures/response.json')) { |l| l.read }
-    allow(Fetcher).to receive(:get_response_body).and_return(@rates)
-  end
+  let(:rates) { File.read(Rails.root.join('spec/fixtures/response.json')) }
+  before { allow(Fetcher).to receive(:get_response_body).and_return(rates) }
 
   it 'fetches rates when db is empty' do
-      expect(Currency.any?).to be_falsy
-      Fetcher.fetch_currencies
-      expect(Currency.count).to eq(1)
-    end
+    expect(Currency.any?).to be_falsy
+    Fetcher.fetch_currencies
+    expect(Currency.count).to eq(1)
+  end
 
   context 'when last fetch was less than one hour ago' do
     it 'returns rates from the last fetch' do
