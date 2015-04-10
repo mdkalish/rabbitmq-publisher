@@ -1,5 +1,3 @@
-require 'rails_helper'
-require 'publisher'
 require 'support/bunny_mock'
 
 describe Publisher do
