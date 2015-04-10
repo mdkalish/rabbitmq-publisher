@@ -3,26 +3,24 @@ require 'bunny'
 
 class Publisher
   def self.publish
-    setup_bunny_exchange.publish(response.to_json, persistent: true)
+    exchange.publish(response.to_json, persistent: true)
   end
+
+  private
 
   def self.response
     Fetcher.fetch_currencies.slice(:uuid, :rates)
   end
 
-  def self.init_bunny_connection
-    Bunny.new
+  def self.connection
+    @connection ||= Bunny.new.tap { |c| c.start }
   end
 
-  def self.start_bunny_connection
-    init_bunny_connection.start
+  def self.channel
+    @channel ||= connection.create_channel
   end
 
-  def self.create_bunny_channel
-    start_bunny_connection.create_channel
-  end
-
-  def self.setup_bunny_exchange
-    create_bunny_channel.fanout('currencies.fanout')
+  def self.exchange
+    channel.fanout('currencies.fanout')
   end
 end
