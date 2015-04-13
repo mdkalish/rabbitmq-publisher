@@ -3,8 +3,9 @@ class AcksWorker
   from_queue 'currencies.acknowledgements', durable: true
 
   def work(message)
-    if currency = Currency.find_by(uuid: message[:uuid])
-      currency.update_attribute("consumer_#{message[:id]}", true)
+    msg = JSON.parse(message)
+    if currency = Currency.find_by(uuid: msg['uuid'])
+      currency.update_attribute("consumer_#{msg['id']}", true)
       ack!
     elsif try_count <= 5
       requeue!
