@@ -1,0 +1,36 @@
+<h1>Publisher Currencies#index</h1>
+<h1>Forex Exchange Rates against USD</h1>
+<div>
+<table>
+  <tr>
+    <th>Fetched at</th>
+    <th>UUID</th>
+    <th>Consumer 1 Ack</th>
+    <th>Consumer 2 Ack</th>
+    <th>Consumer 3 Ack</th>
+  </tr>
+  <% @currencies.each do |c| %>
+  <tr>
+    <td><%= c.created_at%></td>
+    <td><%= c.uuid %></td>
+    <td><%= c.consumer_1 %></td>
+    <td><%= c.consumer_2 %></td>
+    <td><%= c.consumer_3 %></td>
+  </tr>
+  <% end %>
+</table>
+</div>
+
+<style>
+  body {
+    width: 1100px;
+    margin: auto;
+    padding: 50px;
+    text-align: center;
+  }
+  table, th, tr, td {
+    margin: auto;
+    padding: 10px;
+    border: 1px solid black;
+  }
+</style>
