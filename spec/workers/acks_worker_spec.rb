@@ -20,15 +20,8 @@ describe AcksWorker do
 
   context 'when uuid is not found' do
     let(:invalid_message) { {id: 1, uuid: 'invalid'}.to_json }
-    before { 4.times { worker.work(invalid_message) } }
-    after { Rails.cache.clear('try_count') }
 
-    it 'requeues up to 5 times' do
-      expect(worker.work(invalid_message)).to eq(:requeue)
-    end
-
-    it 'rejects the query after 5 requeues' do
-      worker.work(invalid_message)
+    it 'sends reject' do
       expect(worker.work(invalid_message)).to eq(:reject)
     end
   end
