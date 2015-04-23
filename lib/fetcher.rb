@@ -30,3 +30,4 @@ class Fetcher
     JSON.parse(get_response_body)
   end
 end
+

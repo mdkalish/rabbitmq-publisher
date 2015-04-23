@@ -24,3 +24,4 @@ class Publisher
     channel.fanout('currencies.fanout')
   end
 end
+
