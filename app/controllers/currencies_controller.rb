@@ -1,5 +1,7 @@
 class CurrenciesController < ApplicationController
-  def index
-    @currencies = Currency.all
+  helper_method :currencies
+  private
+  def currencies
+    @currencies ||= Currency.all
   end
 end

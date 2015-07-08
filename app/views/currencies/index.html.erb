@@ -9,7 +9,7 @@
     <th>Consumer 2 Ack</th>
     <th>Consumer 3 Ack</th>
   </tr>
-  <% @currencies.each do |c| %>
+  <% currencies.each_with_index do |c, i| %>
   <tr>
     <td><%= c.created_at%></td>
     <td><%= c.uuid %></td>
